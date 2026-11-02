@@ -1,5 +1,5 @@
 /* ============================================================
-   MEHMA STUDIO — script.js
+   THE PASSION FILM & PHOTOGRAPHY — script.js (shared by every page)
    ------------------------------------------------------------
    EDIT YOUR STUDIO DETAILS HERE.
    These values are written into the page on load, so you only
@@ -7,11 +7,11 @@
    index.html for SEO — see the note at the top of that file.)
    ============================================================ */
 const CONFIG = {
-  studioName: "Mehma Studio",
+  studioName: "The Passion Film & Photography",
   phone: "+92 300 0000000",          // shown on the page
   whatsappNumber: "923000000000",    // digits only, with country code, no + or spaces
-  instagramHandle: "@mehmastudio",
-  instagramUrl: "https://www.instagram.com/mehmastudio",
+  instagramHandle: "@thepassionfilm",
+  instagramUrl: "https://www.instagram.com/thepassionfilm",
   address: "Studio 12, Khayaban-e-Ittehad, DHA Phase 6, Karachi",
   prices: {
     silver: 60000,
@@ -58,11 +58,13 @@ document.documentElement.classList.remove("no-js");
     if (v) el.href = v;
   });
 
-  $("#whatsapp-float").href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(
+  const wa = $("#whatsapp-float");
+  if (wa) wa.href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(
     `Assalam o Alaikum ${CONFIG.studioName}, I'd like to ask about wedding photography.`
   )}`;
 
-  $("#year").textContent = new Date().getFullYear();
+  const year = $("#year");
+  if (year) year.textContent = new Date().getFullYear();
 })();
 
 /* ------------------------------------------------------------
@@ -71,6 +73,7 @@ document.documentElement.classList.remove("no-js");
 (function navbar() {
   const nav = $("#navbar");
   const toggle = $("#nav-toggle");
+  if (!nav || !toggle) return;
 
   const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 40);
   onScroll();
@@ -142,6 +145,7 @@ const galleryItems = $$(".gallery-item");
 
 (function filters() {
   const buttons = $$(".filter-btn");
+  if (!buttons.length) return;
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const f = btn.dataset.filter;
@@ -170,6 +174,7 @@ const galleryItems = $$(".gallery-item");
    ------------------------------------------------------------ */
 (function lightbox() {
   const box = $("#lightbox");
+  if (!box || !galleryItems.length) return;
   const img = $("#lb-img");
   const caption = $("#lb-caption");
   let list = [];
@@ -235,6 +240,7 @@ const galleryItems = $$(".gallery-item");
    ------------------------------------------------------------ */
 (function slider() {
   const track = $("#slides");
+  if (!track) return;
   const slides = $$(".slide", track);
   const dotsWrap = $("#dots");
   let current = 0;
@@ -280,22 +286,22 @@ const galleryItems = $$(".gallery-item");
 })();
 
 /* ------------------------------------------------------------
-   Package buttons pre-fill the message field
+   Package buttons link to contact.html?package=Gold
+   and the contact page pre-fills the message field
    ------------------------------------------------------------ */
-$$("[data-package]").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const msg = $("#message");
-    const pkg = btn.dataset.package;
-    const price = formatPKR(CONFIG.prices[pkg.toLowerCase()]);
-    msg.value = `I'm interested in the ${pkg} package (${price}).`;
-  });
-});
+(function packagePrefill() {
+  const msg = $("#message");
+  const pkg = new URLSearchParams(location.search).get("package");
+  if (!msg || !pkg || !CONFIG.prices[pkg.toLowerCase()]) return;
+  msg.value = `I'm interested in the ${pkg} package (${formatPKR(CONFIG.prices[pkg.toLowerCase()])}).`;
+})();
 
 /* ------------------------------------------------------------
    Contact form -> WhatsApp with details pre-filled
    ------------------------------------------------------------ */
 (function contactForm() {
   const form = $("#contact-form");
+  if (!form) return;
   const error = $("#form-error");
   const dateInput = $("#date");
 

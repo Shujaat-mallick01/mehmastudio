@@ -1,5 +1,6 @@
 /* ============================================================
-   MEHMA STUDIO — styles.css
+   THE PASSION FILM & PHOTOGRAPHY — styles.css
+   Shared by every page of the site.
    ------------------------------------------------------------
    Change the brand colours and fonts here. Everything else in
    the file reads from these variables.
@@ -154,7 +155,12 @@ p  { margin: 0 0 1em; }
   border: 1.5px solid var(--gold);
   font-family: var(--font-serif); font-size: 1.2rem; color: var(--gold);
 }
-.logo-text { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; letter-spacing: .02em; }
+.logo-text { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; letter-spacing: .02em; line-height: 1.1; }
+.logo-text small {
+  display: block; margin-top: 2px;
+  font-family: var(--font-sans); font-size: .6rem; font-weight: 500;
+  letter-spacing: .24em; text-transform: uppercase; color: var(--gold);
+}
 .navbar.scrolled .logo { color: var(--maroon); }
 
 /* Mobile menu (default) */
@@ -185,6 +191,7 @@ p  { margin: 0 0 1em; }
 .nav-open .navbar { backdrop-filter: none; -webkit-backdrop-filter: none; }
 .nav-open .logo { color: var(--maroon); position: relative; z-index: 110; }
 .nav-links .nav-cta { font-family: var(--font-sans); font-size: 1rem; margin-top: .5rem; }
+.nav-links a[aria-current="page"]:not(.btn) { color: var(--gold); }
 
 /* Desktop menu */
 @media (min-width: 900px) {
@@ -200,7 +207,8 @@ p  { margin: 0 0 1em; }
     content: ""; position: absolute; left: 0; bottom: 0; height: 1.5px; width: 0;
     background: var(--gold); transition: width .3s var(--ease);
   }
-  .nav-links a:not(.btn):hover::after { width: 100%; }
+  .nav-links a:not(.btn):hover::after,
+  .nav-links a[aria-current="page"]::after { width: 100%; }
   .navbar.scrolled .nav-links { color: var(--ink); }
   .nav-links .nav-cta { margin-top: 0; padding: .6rem 1.3rem; color: var(--white); }
 }
@@ -242,6 +250,101 @@ p  { margin: 0 0 1em; }
   background: var(--white); border-radius: 2px; animation: scrollDot 1.8s infinite;
 }
 @keyframes scrollDot { 0% { opacity: 0; transform: translateY(0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
+
+/* ============================================================
+   Inner page banner (About, Services, Portfolio, ...)
+   Set the photo with style="--bg: url(...)" on the section.
+   ============================================================ */
+.page-hero {
+  position: relative;
+  min-height: 52vh; min-height: 52svh;
+  display: flex; align-items: center;
+  background: var(--bg, url("images/couple-garlands-wedding-hall.jpg")) center 35% / cover no-repeat;
+  color: var(--white); text-align: center;
+}
+.page-hero .hero-content { padding: calc(var(--nav-height) + 40px) 20px 60px; }
+.page-hero h1 { color: var(--white); font-size: clamp(2.2rem, 6vw, 3.6rem); margin-bottom: .3em; }
+.page-hero h1 em { color: var(--gold-light); }
+.page-hero .hero-sub { margin-bottom: 0; }
+.breadcrumb { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.75); margin-bottom: 1rem; }
+.breadcrumb a { color: var(--gold-light); }
+.breadcrumb a:hover { text-decoration: underline; }
+
+.section-cta { text-align: center; margin-top: 44px; }
+
+/* ============================================================
+   Call-to-action band (bottom of most pages)
+   ============================================================ */
+.cta-band {
+  background: var(--maroon-dark);
+  background-image: radial-gradient(circle at 15% 0%, rgba(201,162,77,.22), transparent 50%);
+  color: var(--cream); text-align: center; padding: 72px 0;
+}
+.cta-band h2 { color: var(--white); max-width: 680px; margin: 0 auto .4em; }
+.cta-band p { color: rgba(250,246,240,.8); max-width: 520px; margin: 0 auto 1.8rem; }
+.cta-band .hero-buttons { display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center; }
+
+/* ============================================================
+   About page: values + process steps
+   ============================================================ */
+.values { background: var(--cream-dark); }
+.feature-grid { display: grid; gap: 22px; }
+.feature {
+  background: var(--white); border-radius: var(--radius); padding: 32px 28px; box-shadow: var(--shadow);
+}
+.feature-icon {
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(201,162,77,.15); color: var(--maroon); font-family: var(--font-serif); font-size: 1.4rem;
+  margin-bottom: 18px;
+}
+.feature p { color: var(--muted); margin: 0; font-size: .95rem; }
+@media (min-width: 760px) { .feature-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.steps { display: grid; gap: 28px; counter-reset: step; }
+.step { position: relative; padding-top: 64px; }
+.step::before {
+  counter-increment: step; content: "0" counter(step);
+  position: absolute; top: 0; left: 0;
+  font-family: var(--font-serif); font-size: 2.6rem; color: var(--gold); line-height: 1;
+}
+.step::after { content: ""; position: absolute; top: 20px; left: 70px; right: 0; height: 1px; background: rgba(201,162,77,.4); }
+.step p { color: var(--muted); font-size: .95rem; margin: 0; }
+@media (min-width: 760px) { .steps { grid-template-columns: repeat(4, 1fr); } }
+
+/* ============================================================
+   Services page: detailed rows
+   ============================================================ */
+.service-rows { display: grid; gap: 64px; }
+.service-row { display: grid; gap: 28px; align-items: center; }
+.service-row img { border-radius: var(--radius); box-shadow: var(--shadow-lg); width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.service-row p { color: var(--muted); }
+.service-row ul { margin-top: 1rem; }
+.service-row li { padding: .35rem 0 .35rem 1.6rem; position: relative; }
+.service-row li::before { content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 600; }
+@media (min-width: 900px) {
+  .service-row { grid-template-columns: 1fr 1fr; gap: 72px; }
+  .service-row:nth-child(even) .service-row-img { order: 2; }
+}
+
+/* ============================================================
+   Packages page: FAQ
+   ============================================================ */
+.faq { max-width: 780px; margin: 0 auto; }
+.faq details {
+  background: var(--white); border-radius: 12px; box-shadow: var(--shadow);
+  margin-bottom: 14px; padding: 0 24px;
+}
+.faq summary {
+  cursor: pointer; list-style: none; padding: 20px 32px 20px 0; position: relative;
+  font-family: var(--font-serif); font-size: 1.1rem; color: var(--maroon); font-weight: 600;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  font-size: 1.5rem; color: var(--gold); transition: transform .3s var(--ease);
+}
+.faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.faq details p { color: var(--muted); padding-bottom: 20px; margin: 0; }
 
 /* ============================================================
    3. About
@@ -534,3 +637,15 @@ p  { margin: 0 0 1em; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .fade-in { opacity: 1; transform: none; }
 }
+
+
+/* Add-ons grid */
+.addons-grid { display: grid; gap: 20px; max-width: 960px; margin: 36px auto 0; }
+.addon-card {
+  background: var(--white); border-radius: var(--radius); padding: 24px 28px; box-shadow: var(--shadow);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+}
+.addon-card h4 { font-family: var(--font-serif); font-size: 1.15rem; color: var(--maroon); margin: 0 0 4px; }
+.addon-card p { color: var(--muted); margin: 0; font-size: .9rem; }
+.addon-price { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; color: var(--gold); }
+@media (min-width: 760px) { .addons-grid { grid-template-columns: repeat(2, 1fr); } }
